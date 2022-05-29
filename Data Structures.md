@@ -11,8 +11,8 @@
 
 ### Linear Data Structures
 * Array, Stack, Queue, LinkedList etc
- - Static data structure: We know the size at complie time. Faster access, but slower inserts/deletes. Example: Arrays
- - Dynamic data structure: Memory will be allocated at run time. Faster inserts/deletes, slower reads. Example: LinkedList
+  - Static data structure: We know the size at complie time. Faster access, but slower inserts/deletes. Example: Arrays
+  - Dynamic data structure: Memory will be allocated at run time. Faster inserts/deletes, slower reads. Example: LinkedList
 
 ### Non-Linear Data Structures
 * Trees, Graphs etc
