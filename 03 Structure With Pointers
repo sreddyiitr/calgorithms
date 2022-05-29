@@ -1,0 +1,35 @@
+/******************************************************************************
+        Structures, Array of Strucures and and Pointers to Structures
+        
+        Why are Structures used? For different types of items
+        Structures are used in LinkedLists and other algorithms
+*******************************************************************************/
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+
+struct student {
+    char *firstName;
+    char lastName[50];
+    int studentId;
+    float percentage;
+    long courseFee;
+}; 
+
+int main()
+{
+    
+    /*  Sample pointer declaration
+        int num = 50;
+        int *ptr = &num; 
+        
+        int ~ struct student
+    */
+    struct student s1 = {"John", "Doe", 1, 99.9, 150000}; //Initialize Structures
+    struct student *ptr = &s1;
+    
+    printf("\n Without Pointer: First Name: %s, studentId: %d", s1.firstName, s1.studentId);
+    printf("\n With Pointer: First Name: %s, studentId: %d", ptr->firstName, ptr->studentId);
+    
+    // ptr->firstName = (*ptr).firstName = (*&s1).firstName = s1.firstName
+}
