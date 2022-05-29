@@ -16,3 +16,8 @@
 
 ### Non-Linear Data Structures
 * Trees, Graphs etc
+
+### Efficiency of Data Structure
+* The efficiency is measured in terms of time and space complexity
+* The efficient algorithm takes less time and less space. Let's understand how we can reduce time complexity
+* 
