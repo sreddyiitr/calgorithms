@@ -30,13 +30,14 @@ int main()
     current = (struct Node*)malloc(sizeof(struct Node));
     current->data = 2;
     current->next = NULL;
-    head->next = current;
+    head->next = current;  // Link head node to next node
     
     // No need of definining more nodes.. you can reuse and get new memory block for each node
     current = (struct Node*)malloc(sizeof(struct Node));  
-    current->data = 3; // 
-    current->next = NULL; // 
+    current->data = 3; 
+    current->next = NULL;
     //Notice two arrows here... you can traverse the whole linked list using head node alone
+    //Link previous node to current code
     head->next->next = current;  
   
     printList(head);
