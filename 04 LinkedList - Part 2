@@ -1,0 +1,45 @@
+/******************************************************************************
+        LinkedList: Single - Create node
+*******************************************************************************/
+#include <stdio.h>
+#include <stdlib.h>
+
+struct Node {
+    int data;
+    struct Node* next;
+}; 
+
+void printList(struct Node* n)
+{
+    while (n != NULL) {
+        printf(" %d ", n->data);
+        n = n->next;
+    }
+}
+
+int main()
+{
+    struct Node* head = NULL;  
+    struct Node* current = NULL; 
+  
+    // allocate 3 nodes in the heap
+    head = (struct Node*)malloc(sizeof(struct Node));
+    head->data = 1; // assign data in first node
+    head->next = NULL;
+    
+    current = (struct Node*)malloc(sizeof(struct Node));
+    current->data = 2;
+    current->next = NULL;
+    head->next = current;
+    
+    // No need of definining more nodes.. you can reuse and get new memory block for each node
+    current = (struct Node*)malloc(sizeof(struct Node));  
+    current->data = 3; // 
+    current->next = NULL; // 
+    //Notice two arrows here... you can traverse the whole linked list using head node alone
+    head->next->next = current;  
+  
+    printList(head);
+  
+    return 0;
+}
