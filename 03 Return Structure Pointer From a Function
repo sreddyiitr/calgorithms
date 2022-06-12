@@ -1,0 +1,34 @@
+/******************************************************************************
+        Returning a structure from a function
+*******************************************************************************/
+#include <stdio.h>
+#include <stdlib.h>
+
+struct Point {
+    int x;
+    int y;
+}; 
+
+
+// Function to assign data in a structure and return a structure pointer from the function
+struct Point * initialize(int a, int b) {
+    
+    // Create a pointer to a structure
+    struct Point *ptr = (struct Point *) malloc(sizeof(struct Point));
+   
+    // Initialize a & b to the structure variables
+    ptr->x = a;
+    ptr->y = b;
+    
+    // Return the pointer to the calling function
+    return ptr;
+}
+
+void main() {
+    
+    int a=10, b=20;
+    //Print values of x and y in pointer
+    struct Point * ptr1 = initialize(a, b);
+    printf("\nValues of x and y: %d %d", ptr1->x, ptr1->y);
+    
+}
