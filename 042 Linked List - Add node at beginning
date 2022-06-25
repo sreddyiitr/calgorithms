@@ -1,0 +1,52 @@
+/******************************************************************************
+ * Single Linked List 
+ * ==================
+ * Travering Linked Lists --> example: printNodes function (done already)
+ * Inserting (at end, at beginning, at a specific position)
+ * Deleting (at end, at beginning, at a specific position)
+ * Reversing linked list
+*******************************************************************************/
+#include <stdio.h>
+#include <stdlib.h>
+
+struct Node {
+    int data;
+    struct Node* next;
+};
+
+struct Node * add_at_beg(struct Node *head, int data) {
+    
+    // Let's create a new head node that can be linked to the original head
+    struct Node* ptr = (struct Node*)malloc(sizeof(struct Node));
+    ptr->data = data; 
+    ptr->next = head;
+    
+    //return the address of new head
+    return ptr;
+}
+
+void printList(struct Node* n)
+{
+    while (n != NULL) {
+        printf(" %d ", n->data);
+        n = n->next;
+    }
+}
+
+int main()
+{
+    struct Node *head = (struct Node*)malloc(sizeof(struct Node));
+    head->data = 1;
+    head->next = NULL;
+    
+    struct Node* ptr = head;  // create a ptr node that is same as head node 
+    
+    ptr = add_at_beg(ptr, 2); // the retrun node address is of new head node
+    ptr = add_at_beg(ptr, 3); // the retrun node address is of new head node
+    ptr = add_at_beg(ptr, 4); // the retrun node address is of new head node
+    
+    printList(ptr); // here we use ptr since that is the new head of the linked list
+    
+    return 0;
+    
+}
