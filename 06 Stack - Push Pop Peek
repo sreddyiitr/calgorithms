@@ -1,0 +1,156 @@
+/******************************************************************************
+                            C programming
+                            Stacks - Using Linked List 
+
+*******************************************************************************/
+
+#include <stdio.h>
+#include <stdlib.h>
+
+/******************************************************************************
+ Declare a "global" structure that can be accessed anywhere in the program
+ This helps us to not pass the pointer as a parameter to the function or return 
+ the pointer to a function. 
+ 
+ Note * top = NULL after }.
+ That means top is the global pointer to a structure which is assigned to NULL
+ top is the head node of a linked list. It is also the top node in a stack 
+*******************************************************************************/
+struct Node {
+    int data;
+    struct Node* next;
+} * top = NULL;  // top is the top node in the stack linked list.
+
+// Check if the stack is empty. if top is NULL, stack is empty
+int isEmpty() {
+    if(top == NULL) {
+        return 1;
+    } else {
+        return 0;
+    }
+}
+
+/******************************************************************************
+* Stack push function - description
+* ***********************************
+* no input head parameter and return head variable
+* 
+* We write code similar to adding node at the beginning of linked list 
+* But, the difference is.. we refer to global stack variable called 
+* top instead of head 
+* 
+*******************************************************************************/
+void push(int data) {
+    
+    // Let's create a new head node that can be linked to the original head
+    struct Node* ptr = (struct Node*)malloc(sizeof(struct Node));
+    
+    if(ptr == NULL) { //if for some reason, no memory to create new node 
+        printf("\n Stack overflow");  
+        exit(1);
+    }
+    ptr->data = data;
+    ptr->next = top;
+    
+    // Instead of returning, we assign ptr to top since top is a global variable
+    top = ptr;
+}
+
+/******************************************************************************
+* Stack - pop function description
+* ***********************************
+* 
+* Returns the deleted node data, no input parameter because we can refer to the
+* global stack variable top
+* 
+* We write code similar to deleting node at the beginning of linked list 
+*
+*******************************************************************************/
+int pop() {
+    int deletedNodeData;
+    
+    // Check if stack is empty, say it is underflow or empty
+    if(isEmpty()) {
+        printf("\n Stack underflow");
+        exit(1);  // this exists the function with return code 1.
+    }
+    
+    // If stack is not empty, write the logic similar to deleting node at beginning
+    
+    // Let's create a new head node that can be linked to the original head or top 
+    struct Node* ptr = top; 
+    
+    // Store the value of first node or top node in deletedNodeData variable to return 
+    deletedNodeData = top->data;
+    
+    // Move head or top to the next node 
+    top = top->next;
+    
+    // Free and assign null to the first node in ptr 
+    free(ptr); 
+    ptr=NULL;
+    
+    // return deletedNodeData 
+    return deletedNodeData;
+    
+}
+
+
+/******************************************************************************
+* Stack - peek function description
+* ***********************************
+* 
+* No input parameter since we can refer to the global variable top or head 
+* Returns the first node, if the stack is not empty.
+*
+*******************************************************************************/
+int peek() {
+    
+    // Check if stack is empty, say it is underflow or empty
+    if(isEmpty()) {
+        printf("\n Stack underflow");
+        exit(1);  // this exists the function with return code 1.
+    }
+    
+    // If the stack is not empty, return the data in top node 
+    return top->data;
+}
+
+void printList(struct Node* n)
+{
+    while (n != NULL) {
+        printf(" %d ", n->data);
+        n = n->next;
+    }
+}
+
+int main()
+{
+    //Let's call isEmpty on stack to see if it is empty 
+    //isEmpty();
+    // Let's peek at stack
+    //printf("\n Peeking at stack: %d", peek());
+    
+    // Let's call push to create more nodes in stack
+    push(10);
+    push(20);
+    push(30);
+    push(40);
+    push(50);
+    
+    //Let's call isEmpty on stack to see if it is empty 
+    printf("\n Is the stack empty: 0-false, 1-true: Value is %d", isEmpty());
+    // Let's peek at stack
+    printf("\n Peeking at stack: %d", peek());
+    
+    printf("\n Let's print stack now \n");
+    printList(top); // here we use ptr since that is the new head of the linked list
+    
+    //Let's pop one element from the stack 
+    printf("\n Pop from the stack: %d", pop());
+    printf("\n Let's print stack now \n");
+    printList(top); // here we use ptr since that is the new head of the linked list
+    
+    return 0;
+    
+}
