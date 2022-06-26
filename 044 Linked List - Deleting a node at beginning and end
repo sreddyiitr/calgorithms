@@ -1,0 +1,93 @@
+/******************************************************************************
+ * Single Linked List 
+ * 
+ * Deleting (at beginning and ending)
+ *
+*******************************************************************************/
+#include <stdio.h>
+#include <stdlib.h>
+
+struct Node {
+    int data;
+    struct Node* next;
+};
+
+struct Node * add_at_end(struct Node *ptr, int data) {
+    
+    // Let's create a node that can be linked to the original linked list
+    struct Node* temp = (struct Node*) malloc(sizeof(struct Node));
+    temp->data = data;
+    temp->next = NULL;
+    
+    //Assign the address of last element in the linked list to temp node
+    ptr->next = temp;
+    return temp; // here, we are returning the address of temp node (which is the last node)
+}
+
+void printList(struct Node* n)
+{
+    while (n != NULL) {
+        printf(" %d ", n->data);
+        n = n->next;
+    }
+}
+
+void del_end(struct Node *head) {
+   
+   if(head == NULL) {   // No node exists in linked list
+       printf("\n Your linked list is already NULL");
+   } else if(head->next == NULL) {  // Only one node exists in linked list
+       free(head);
+       head=NULL;
+   } else {   // More than one node exists
+      struct Node *temp = head;
+      while(temp->next->next != NULL) {
+          temp = temp->next;
+      }
+      free(temp->next);
+      temp->next=NULL;
+   }
+}
+
+struct Node * del_beg(struct Node * head) {
+    if(head == NULL) {   // No node exists in linked list
+        printf("\n Your linked list is already NULL");
+    } else if(head->next == NULL) {  // Only one node exists in linked list
+        free(head);
+        head=NULL;
+        return head;
+    } else {   // More than one node exists
+        struct Node *temp = head;
+        head = head->next;
+        free(temp);
+        temp = NULL;
+        return head;
+    }
+}
+
+int main()
+{
+    struct Node *head = (struct Node*)malloc(sizeof(struct Node));
+    head->data = 1;
+    head->next = NULL;
+    
+    struct Node* ptr = head;  // create a ptr node that is same as head node 
+    
+    ptr = add_at_end(ptr, 2); // the retrun node address is of temp node (which is the last node)
+    ptr = add_at_end(ptr, 3); // the retrun node address is of temp node (which is the last node)
+    ptr = add_at_end(ptr, 5); // the retrun node address is of temp node (which is the last node)
+    
+    printList(head); // here we are not passing ptr because ptr is the last node in linked list 
+   
+    printf("\n After deleting the node at beginning \n");
+    
+    head = del_beg(head);
+    printList(head);
+    
+    printf("\n After deleting the node at the end \n");
+    del_end(head);
+    printList(head);
+    
+    return 0;
+    
+}
