@@ -1,0 +1,56 @@
+/******************************************************************************
+ * Double Linked List
+ * 
+ *
+*******************************************************************************/
+#include <stdio.h>
+#include <stdlib.h>
+
+struct Node {
+    struct Node* prev;
+    int data;
+    struct Node* next;
+};
+
+struct Node * initialize_dll_node(int data) {
+    
+    // Let's create a node that can be linked to the original double linked list
+    struct Node* temp = (struct Node*) malloc(sizeof(struct Node));
+    temp->prev = NULL;
+    temp->data = data;
+    temp->next = NULL;
+    return temp; 
+}
+
+//ptr is the current last node in the double linked list
+struct Node * add_at_dll_end(struct Node * ptr, int data) {
+    
+    struct Node * temp = initialize_dll_node(data);
+    ptr->next = temp;
+    temp->prev = ptr;
+    return temp;  // returning temp because this is the last node
+}
+
+void printList(struct Node* n)
+{
+    while (n != NULL) {
+        printf(" %d ", n->data);
+        n = n->next;
+    }
+}
+
+int main()
+{
+    struct Node *head = initialize_dll_node(1);
+    
+    struct Node* ptr = head;  // create a ptr node that is same as head node 
+    
+    ptr = add_at_dll_end(ptr, 2); // the retrun node address is of temp node (which is the last node)
+    ptr = add_at_dll_end(ptr, 3); // the retrun node address is of temp node (which is the last node)
+    ptr = add_at_dll_end(ptr, 4); // the retrun node address is of temp node (which is the last node)
+    
+    printList(head); // here we are not passing ptr because ptr is the last node in linked list 
+    
+    return 0;
+    
+}
