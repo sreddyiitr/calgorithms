@@ -1,0 +1,83 @@
+/******************************************************************************
+ * Single Linked List 
+ * 
+ * Inserting (at a specific position)
+ *
+*******************************************************************************/
+#include <stdio.h>
+#include <stdlib.h>
+
+struct Node {
+    int data;
+    struct Node* next;
+};
+
+struct Node * add_at_end(struct Node *ptr, int data) {
+    
+    // Let's create a node that can be linked to the original linked list
+    struct Node* temp = (struct Node*) malloc(sizeof(struct Node));
+    temp->data = data;
+    temp->next = NULL;
+    
+    //Assign the address of last element in the linked list to temp node
+    ptr->next = temp;
+    return temp; // here, we are returning the address of temp node (which is the last node)
+}
+
+struct Node * add_at_pos(struct Node *ptr, int position, int data) {
+    // Let's create a node that can be added at a specific position
+    struct Node* temp = (struct Node*) malloc(sizeof(struct Node));
+    temp->data = data;
+    temp->next = NULL;
+    
+    // posotion =4, ptr moved to node 2
+    // position =3, ptr moved to node 3 
+    // position =2, ptr moved to node 4 ... since we need to stop at node 3, we should decrement position by 1 before the loop
+    // position=1, loop exits... 
+    
+    position--;
+    
+    // Move pointer to the node number = position - 1 
+    // stop when (node number - position) = 1 i.e., 4-3 = 1
+    while(position != 1) {
+       ptr = ptr->next;
+       position--;
+    }
+    
+    temp->next = ptr->next;
+    ptr->next = temp;
+    return ptr;
+}
+
+void printList(struct Node* n)
+{
+    while (n != NULL) {
+        printf(" %d ", n->data);
+        n = n->next;
+    }
+}
+
+int main()
+{
+    struct Node *head = (struct Node*)malloc(sizeof(struct Node));
+    head->data = 1;
+    head->next = NULL;
+    
+    struct Node* ptr = head;  // create a ptr node that is same as head node 
+    
+    ptr = add_at_end(ptr, 2); // the retrun node address is of temp node (which is the last node)
+    ptr = add_at_end(ptr, 3); // the retrun node address is of temp node (which is the last node)
+    ptr = add_at_end(ptr, 5); // the retrun node address is of temp node (which is the last node)
+    
+    printList(head); // here we are not passing ptr because ptr is the last node in linked list 
+   
+    int position = 4;
+    int data = 40; 
+    printf("\n After adding %d at position %d \n", data, position);
+    
+    ptr = add_at_pos(head, position, data);
+    printList(head);
+    
+    return 0;
+    
+}
