@@ -1,0 +1,6 @@
+Create AVL Tree from the following
+  14, 17, 11, 7, 53, 4, 13, 12, 8, 60, 19, 16, 20
+  As you add node, Look at the balance factor and update the tree to satisfy AVL definition
+  
+
+Delete 8, 7, 11, 14, 17 from the above AVL tree
