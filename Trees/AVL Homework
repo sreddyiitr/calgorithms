@@ -1,6 +1,21 @@
+
 Create AVL Tree from the following
   14, 17, 11, 7, 53, 4, 13, 12, 8, 60, 19, 16, 20
   As you add node, Look at the balance factor and update the tree to satisfy AVL definition
-  
+
+
+/*****
+
+  Inorder: 1, 2, 3
+  Inorder predecessor: 1
+  Inorder successor: 3
+
+  If a node with left and right children does not have a balance factor of -1, 0, 1, then 
+
+  1. Take the maximum from the predecessor and make it the root node
+
+  2. Take the minimum from the successor and make it the root node
+
+***/
 
 Delete 8, 7, 11, 14, 17 from the above AVL tree
