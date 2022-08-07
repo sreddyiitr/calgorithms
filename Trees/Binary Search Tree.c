@@ -72,10 +72,14 @@ struct Node * delete_node(struct Node * root, int key) {
             Found the node to be deleted
         */
         if(root->left == NULL) {
-            
+            struct Node * temp = root->right;
+            free(root);
+            return temp;
         }
         if(root->right == NULL) {
-            
+            struct Node * temp = root->left;
+            free(root);
+            return temp;
         }
         
         struct Node * successorParent = root;
