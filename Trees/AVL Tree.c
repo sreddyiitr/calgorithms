@@ -73,3 +73,45 @@ struct Node * left_rotate(struct Node* x) {
     
     return y; // y is the new root
 }
+
+/*
+    Insertion of a new node in Binary Search tree 
+    1. Create new node
+    2. Find the position to add this node
+        a. Check if new node key is less than the current node, then go to left
+        b. Check if new node key is greater than the current node, then go to right
+*/
+struct Node * insert(struct Node * node, int key) {
+    
+    if(node == NULL) {
+        return new_node(key);
+    } else if(key < node->key) {
+        node->left = insert(node->left, key);
+    } else if(key > node->key) {
+        node->right = insert(node->right, key);
+    }
+    
+    node->height = 1 + max(get_height(node->left) , get_height(node->right));
+    int balanceFactor = get_balance_factor(node);
+    
+    // Left Left 
+    if(balanceFactor > 1 && key < node->left->key) {
+        right_rotate(node);
+    }
+    // Right Right
+    if(balanceFactor < -1 && key > node->left->key) {
+        left_rotate(node);
+    }
+    // Left Right
+    if(balanceFactor > 1 && key > node->left->key) {
+        node->left = left_rotate(node->left);
+        right_rotate(node);
+    }
+    // Right Left
+    if(balanceFactor < 1 && key < node->left->key) {
+        node->right = right_rotate(node->right);
+        left_rotate(node);
+    }
+    return node; 
+}
+
