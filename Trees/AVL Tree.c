@@ -11,8 +11,13 @@ struct Node {
     int height;
 };
 
+int max(int a, int b) {
+
+    return a > b? a:b;    
+}
+
 int get_height(struct Node *node) {
-    if(n==NULL) {
+    if(node==NULL) {
         return 0;
     }
     return node->height;
@@ -96,22 +101,42 @@ struct Node * insert(struct Node * node, int key) {
     
     // Left Left 
     if(balanceFactor > 1 && key < node->left->key) {
-        right_rotate(node);
+        return right_rotate(node);
     }
     // Right Right
     if(balanceFactor < -1 && key > node->left->key) {
-        left_rotate(node);
+        return left_rotate(node);
     }
     // Left Right
     if(balanceFactor > 1 && key > node->left->key) {
         node->left = left_rotate(node->left);
-        right_rotate(node);
+        return right_rotate(node);
     }
     // Right Left
     if(balanceFactor < 1 && key < node->left->key) {
         node->right = right_rotate(node->right);
-        left_rotate(node);
+        return left_rotate(node);
     }
     return node; 
 }
 
+void preOrder(struct Node * node) {
+
+    if(node != NULL) {
+        print("%d ", root->key);
+        preOrder(root->left);
+        preOrder(root->right);
+    }    
+}
+
+int main() {
+    
+    struct Node * root = NULL;
+    root = insert(root, 1);
+    root = insert(root, 2);
+    root = insert(root, 4);
+    root = insert(root, 5);
+    root = insert(root, 6);
+    root = insert(root, 3);
+    return 0;
+}
