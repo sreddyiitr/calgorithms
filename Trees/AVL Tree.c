@@ -96,7 +96,7 @@ struct Node * insert(struct Node * node, int key) {
         node->right = insert(node->right, key);
     }
     
-    node->height = 1 + max(get_height(node->left) , get_height(node->right));
+    //node->height = 1 + max(get_height(node->left) , get_height(node->right));
     int balanceFactor = get_balance_factor(node);
     
     // Left Left 
