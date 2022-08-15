@@ -96,7 +96,7 @@ struct Node * insert(struct Node * node, int key) {
         node->right = insert(node->right, key);
     }
     
-    //node->height = 1 + max(get_height(node->left) , get_height(node->right));
+    node->height = 1 + max(get_height(node->left) , get_height(node->right));
     int balanceFactor = get_balance_factor(node);
     
     // Left Left 
@@ -104,7 +104,7 @@ struct Node * insert(struct Node * node, int key) {
         return right_rotate(node);
     }
     // Right Right
-    if(balanceFactor < -1 && key > node->left->key) {
+    if(balanceFactor < -1 && key > node->right->key) {
         return left_rotate(node);
     }
     // Left Right
@@ -113,7 +113,7 @@ struct Node * insert(struct Node * node, int key) {
         return right_rotate(node);
     }
     // Right Left
-    if(balanceFactor < -1 && key < node->left->key) {
+    if(balanceFactor < -1 && key < node->right->key) {
         node->right = right_rotate(node->right);
         return left_rotate(node);
     }
@@ -121,11 +121,29 @@ struct Node * insert(struct Node * node, int key) {
 }
 
 void preOrder(struct Node * root) {
-
+    
     if(root != NULL) {
         printf("%d ", root->key);
         preOrder(root->left);
         preOrder(root->right);
+    }    
+}
+
+void inOrder(struct Node * root) {
+    
+    if(root != NULL) {
+        inOrder(root->left);
+        printf("%d ", root->key);
+        inOrder(root->right);
+    }    
+}
+
+void postOrder(struct Node * root) {
+
+    if(root != NULL) {
+        postOrder(root->left);
+        postOrder(root->right);
+        printf("%d ", root->key);
     }    
 }
 
@@ -138,6 +156,9 @@ int main() {
     root = insert(root, 5);
     root = insert(root, 6);
     root = insert(root, 3);
+    printf("\n postOrder tree \n");
+    postOrder(root);
+    printf("\n preOrder tree \n");
     preOrder(root);
     return 0;
 }
