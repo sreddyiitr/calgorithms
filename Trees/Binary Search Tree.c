@@ -57,48 +57,55 @@ void postorder(struct Node *root) {
     }
 }
 
+struct Node * inorderPrecessor(struct Node * root) {
+    root = root->left;
+    while(root->right != NULL) {
+        root = root->right;
+    }
+    return root;
+}
+
 struct Node * delete_node(struct Node * root, int key) {
     
+    struct Node * temp;
     if(root == NULL) {
-        return root;
+        return NULL;
     }
     if(key < root->key) {
        root->left = delete_node(root->left, key); 
     } 
     else if(key > root->key) {
-       root->right = delete_node(root->right, key); 
+        root->right = delete_node(root->right, key); 
     } else {
-        /*
-            Found the node to be deleted
-        */
-        if(root->left == NULL) {
-            struct Node * temp = root->right;
+        // If the node has BOTH LEFT AND RIGHT children
+        if(root->left != NULL && root->right != NULL) {
+            temp = inorderPrecessor(root);
+            root->key = temp->key;
+            root->left = delete_node(root->left, temp->key); 
+            return root;
+        }
+        // If the node has NO children        
+        if(root->left == NULL && root->right == NULL) {
             free(root);
-            return temp;
+            return NULL;
         }
-        if(root->right == NULL) {
-            struct Node * temp = root->left;
-            free(root);
-            return temp;
+        // If the node has ONLY RIGHT children        
+        if(root->left == NULL && root->right != NULL) {
+            temp = root;
+            root = root->right;
+            free(temp);
+            return root;
         }
-        
-        struct Node * successorParent = root;
-        struct Node * successor = root->right;
-        while(successor-> left != NULL) {
-            successorParent = successor;
-            successor = successor->left;
-        }
-        
-        if(successorParent != root) {
-            successorParent->left = successor->right;
-        } else {
-            successorParent->right = successor->right;
-        }
-        
-        root->key = successor->key;
-        free(successor);
-        return root;
+        // If the node has ONLY LEFT children               
+        if(root->left != NULL && root->right == NULL) {
+            temp = root;
+            root = root->left;
+            free(temp);
+            return root;
+        }      
     }
+    return root;
+
 }
 
 void main() {
@@ -107,15 +114,20 @@ void main() {
     insert(root, 20);
     insert(root, 40);
     insert(root, 70);
+    insert(root, 55);
+    insert(root, 53);
     insert(root, 60);
     insert(root, 80);
     
+    printf("\nInorder   | ");
     inorder(root);
-    printf("\n");
+    printf("\nPostorder | ");
     postorder(root);
-    
-    delete_node(root, 50);
-    printf("\n");
-    inorder(root);
+
+    int delete_node_key = 50;
+    printf("\nDeleting node with key: %d ", delete_node_key);
+    delete_node(root, delete_node_key);
+    printf("\nPostorder | ");
+    postorder(root);
 
 }
