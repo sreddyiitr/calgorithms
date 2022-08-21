@@ -57,6 +57,14 @@ void postorder(struct Node *root) {
     }
 }
 
+struct Node * inorderPrecessor(struct Node * root) {
+    root = root->left;
+    while(root->right != NULL) {
+        root = root->right;
+    }
+    return root;
+}
+
 struct Node * delete_node(struct Node * root, int key) {
     
     struct Node * temp;
