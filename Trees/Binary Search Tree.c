@@ -57,52 +57,59 @@ void postorder(struct Node *root) {
     }
 }
 
-struct Node * inorderPrecessor(struct Node * root) {
-    root = root->left;
-    while(root->right != NULL) {
-        root = root->right;
+struct Node * inorderPrecessor(struct Node * node) {
+    node = node->left;
+    while(node->right != NULL) {
+        node = node->right;
     }
-    return root;
+    return node;
 }
 
-struct Node * delete_node(struct Node * root, int key) {
+struct Node * delete_node(struct Node * node, int key) {
     
     struct Node * temp;
-    if(root == NULL) {
+    
+    if(node == NULL) {
         return NULL;
     }
-    if(key < root->key) {
-       root->left = delete_node(root->left, key); 
+    if(key < node->key) {
+       node->left = delete_node(node->left, key); 
     } 
-    else if(key > root->key) {
-        root->right = delete_node(root->right, key); 
+    else if(key > node->key) {
+        node->right = delete_node(node->right, key); 
     } else {
-        if(root->left != NULL && root->right != NULL) {
-            temp = inorderPrecessor(root);
-            root->key = temp->key;
-            root->left = delete_node(root->left, temp->key); 
-            return root;
+        // Found the node to be deleted
+        
+        // There are left and right children for the node to be deleted
+        if(node->left != NULL && node->right != NULL) {
+            temp = inorderPrecessor(node);
+            node->key = temp->key;  //assigning only key, not address
+            node->left = delete_node(node->left, temp->key); 
+            return node;
         }
-        if(root->left == NULL && root->right == NULL) {
-            free(root);
+        // No children for the node to be deleted
+        if(node->left == NULL && node->right == NULL) {
+            free(node);
             return NULL;
         }    
-        if(root->left == NULL && root->right != NULL) {
-            temp = root;
-            root = root->right;
+        // There is only right child for the node to be deleted
+        if(node->left == NULL && node->right != NULL) {
+            temp = node;
+            node = node->right;
             free(temp);
-            return root;
+            return node;
         }
-        if(root->left != NULL && root->right == NULL) {
-            temp = root;
-            root = root->left;
+        // There is only left child for the node to be deleted
+        if(node->left != NULL && node->right == NULL) {
+            temp = node;
+            node = node->left;
             free(temp);
-            return root;
+            return node;
         }
           
     }
     
-    return root;
+    return node;
 
 }
 
@@ -114,13 +121,15 @@ void main() {
     insert(root, 70);
     insert(root, 60);
     insert(root, 80);
-    
+    printf("inOrder: ");
     inorder(root);
     printf("\n");
+    printf("postOrder: ");
     postorder(root);
     
+    printf("\nDeleting 50: ");
     delete_node(root, 50);
     printf("\n");
-    inorder(root);
-
+    printf("postOrder: ");
+    postorder(root);
 }
